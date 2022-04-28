@@ -1,14 +1,10 @@
-const generateHTML = require('./dist/generateHTML.js')
-
+const generateHTML = require("./dist/generateHTML.js");
 
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/intern");
 const fs = require("fs");
-const inquirer = require('inquirer');
-
-
-
+const inquirer = require("inquirer");
 
 // teamlist array
 const teamList = [];
@@ -107,7 +103,7 @@ const includeEmployee = () => {
 			},
 		])
 		.then((employeeInfo) => {
-			let { name, id, email, role,github, school, confirmIncludeEmployee } =
+			let { name, id, email, role, github, school, confirmIncludeEmployee } =
 				employeeInfo;
 			let employee;
 
@@ -145,13 +141,14 @@ const writeFile = (data) => {
 };
 
 includeManager()
-.then(includeEmployee)
-.then(teamList => {
-	return generateHTML(teamList);
-})
-.then(pageHTML => {
-	return writeFile(pageHTML);
-})
-.catch(err => {
-	console.log(err);
-});
+	.then(includeEmployee)
+	.then((teamList) => {
+		return generateHTML(teamList);
+	})
+	.then((pageHTML) => {
+		return writeFile(pageHTML);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+
