@@ -1,8 +1,14 @@
+const generateHTML = require('./dist/generateHTML.js')
+
+
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/intern");
 const fs = require("fs");
-const inquirer = require("inquirer");
+const inquirer = require('inquirer');
+
+
+
 
 // teamlist array
 const teamList = [];
@@ -76,7 +82,7 @@ const includeEmployee = () => {
 					if (nameInput) {
 						return true;
 					} else {
-						console.log("Enter the employee's github user's name");
+						console.log("Enter the employee's github username");
 					}
 				},
 			},
@@ -101,7 +107,7 @@ const includeEmployee = () => {
 			},
 		])
 		.then((employeeInfo) => {
-			let { name, id, email, role, school, confirmIncludeEmployee } =
+			let { name, id, email, role,github, school, confirmIncludeEmployee } =
 				employeeInfo;
 			let employee;
 
@@ -117,10 +123,35 @@ const includeEmployee = () => {
 
 			teamList.push(employee);
 
-			if(confirmIncludeEmployee) {
-				return includeEmployee(teamList)
+			if (confirmIncludeEmployee) {
+				return includeEmployee(teamList);
 			} else {
-				return teamList
+				return teamList;
 			}
 		});
 };
+
+const writeFile = (data) => {
+	fs.writeFile("./dist/team.html", data, (err) => {
+		if (err) {
+			console.log(err);
+			return;
+		} else {
+			console.log(
+				"Team profile has been successfully created! Check index.html"
+			);
+		}
+	});
+};
+
+includeManager()
+.then(includeEmployee)
+.then(teamList => {
+	return generateHTML(teamList);
+})
+.then(pageHTML => {
+	return writeFile(pageHTML);
+})
+.catch(err => {
+	console.log(err);
+});
