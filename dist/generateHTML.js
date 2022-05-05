@@ -38,7 +38,7 @@ const generateIntern = function (intern) {
 	return `<div class="col-4 mt-4">
     <div class="card border-secondary mb-3" style="max-width: 18rem">
         <div class="card-header">${intern.name}</div>
-      
+    
         <div class="card-body text-secondary">
             <ul>
                 <li>ID:${intern.id}</li>
@@ -115,6 +115,6 @@ const generateTeamPage = function (employeeCards) {
     </body>
     
     </html>
-  `;
+`;
 };
 module.exports = generateHTML;
